@@ -8,3 +8,16 @@ removing comments, every other line starting from the second line, reversing eac
 and FT_LINE2 included, and they must separated by ", " (without quotation
 marks), and the output must end with a ".".
 
+
+
+cat /etc/passwd | sed -e 's/#.*//' -e 's/[ ^I]*$//' -e '/^$/ d' -e 's/:.*//g' \
+| awk 'NR%2==1' \
+| rev \
+| sort -r \
+| awk 'NR>=FT_LINE1 && NR<=FT_LINE2' \
+| tr '\n' ',' \
+| sed -e 's/, */, /g' -e 's/.$//' \
+| sed 's/$/./'
+
+
+
